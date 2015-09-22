@@ -11,6 +11,11 @@ Version: 0.0.1
 include( "twitter-aggregator.php" );
 
 
+/*
+
+There are some crazy bugs here that I'm not sure what's going on - will revisit after I build caching.
+
+
 class twitter_aggregator_widget extends WP_Widget {
 	function twitter_aggregator_widget() {
 		// Instantiate parent object
@@ -107,6 +112,7 @@ function twitter_aggregator_init() {
 }
 add_action("widgets_init", "twitter_aggregator_init");
 
+*/
 
 
 ?>

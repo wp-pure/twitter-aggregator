@@ -26,65 +26,115 @@ function twitter_aggregator_get_timeline( $instance_settings ) {
 
 	// merge instance settings with global settings, overriding global if passed here
 	$all_settings = array_merge( $settings, $instance_settings );
-	
-	// split apart usernames
-	$usernames = explode( ",", $all_settings['usernames'] );
 
-	// empty array to place results into
-	$response_final = array();
+	// get upload directory info
+	$upload_info = wp_upload_dir();
 
-	// loop through usernames
-	if ( !empty( $usernames ) ) {
-		foreach ( $usernames as $username ) {
+	// set up some variables to store cache urls
+	$cache_dir = $upload_info['basedir'] . '/cache';
 
-			// pull some statuses
-			$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+	// cache file url for this set of usernames
+	$cache_file = $cache_dir . '/twitter-' . md5( $all_settings['usernames'] ) . '.txt';
 
-			// put together an array of query string arguments
-			$query_args = array(
-				'screen_name' => trim( $username ),
-				'skip_status' => 1,
-				'exclude_replies' => 1,
-				'count' => $all_settings['limit']
+	// if cache folder doesn't exist, make it.
+	if ( !file_exists( $cache_dir ) ) {
+		if ( !mkdir( $cache_dir, '775', 1 ) ) {
+			return array(
+				'error' => 1,
+				'error_message' => "Couldn't create cache directories for twitter."
 			);
-
-			// build the query string
-			$query = '?' . http_build_query( $query_args );
-
-			// use the get method
-			$method = 'GET';
-
-			// open up a twitter API object for us
-			$twitter = new TwitterAPIExchange( $all_settings );
-
-			// execute response
-			$response = $twitter->setGetfield( $query )->buildOauth( $url, $method )->performRequest();
-
-			// convert the response from json to an array
-			$response_array = json_decode( $response );
-
-			// loop through response, and set up the array by date
-			if ( isset( $response_array->errors ) ) {
-				return array(
-					'error' => 1,
-					'error_message' => $response_array->errors[0]->message
-				);
-			} else {
-				foreach ( $response_array as $result ) {
-					$date = strtotime( $result->created_at );
-					$response_final[ $date ] = $result;
-				}
-			}
 		}
-	} else {
-		return array(
-			'error' => 1,
-			'error_message' => "No usernames specified."
-		);
 	}
 
-	// sort response array in reverse order
-	krsort( $response_final );
+	// check if we have a cached version
+	if ( file_exists( $cache_file ) ) {
+		if ( filemtime( $cache_file ) < ( time() - 600 ) ) {
+			$cached = false;
+		} else {
+			$cached = true;
+		}
+	} else {
+		$cached = false;
+	}
+	
+
+	// if we don't have the timeline cached, grab it again.
+	if ( $cached === false ) {
+
+		// split apart usernames
+		$usernames = explode( ",", $all_settings['usernames'] );
+
+		// empty array to place results into
+		$response_final = array();
+
+		// loop through usernames
+		if ( !empty( $usernames ) ) {
+			foreach ( $usernames as $username ) {
+
+				// pull some statuses
+				$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+
+				// put together an array of query string arguments
+				$query_args = array(
+					'screen_name' => trim( $username ),
+					'skip_status' => 1,
+					'exclude_replies' => 1,
+					'count' => $all_settings['limit']
+				);
+
+				// build the query string
+				$query = '?' . http_build_query( $query_args );
+
+				// use the get method
+				$method = 'GET';
+
+				// open up a twitter API object for us
+				$twitter = new TwitterAPIExchange( $all_settings );
+
+				// execute response
+				$response = $twitter->setGetfield( $query )->buildOauth( $url, $method )->performRequest();
+
+				// convert the response from json to an array
+				$response_array = json_decode( $response );
+
+				// loop through response, and set up the array by date
+				if ( isset( $response_array->errors ) ) {
+					return array(
+						'error' => 1,
+						'error_message' => $response_array->errors[0]->message
+					);
+				} else {
+					foreach ( $response_array as $result ) {
+						$date = strtotime( $result->created_at );
+						$response_final[ $date ] = $result;
+					}
+				}
+			}
+
+			// sort response array in reverse order
+			krsort( $response_final );
+
+			// write the cache file
+			if ( !file_put_contents( $cache_file, serialize( $response_final ) ) ) {
+				return array(
+					'error' => 1,
+					'error_message' => "Could not write cache file."
+				);
+			}
+
+		} else {
+			return array(
+				'error' => 1,
+				'error_message' => "No usernames specified."
+			);
+		}
+
+	} else {
+
+		// grab cache file if we have it
+		$response_final = unserialize( file_get_contents( $cache_file ) );
+
+	}
 
 	// return the tweets
 	return $response_final;

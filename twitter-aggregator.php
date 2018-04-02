@@ -157,7 +157,7 @@ function twitter_aggregator_widget( $instance_settings ) {
 			if ( $tweet_count <= $instance_settings['limit'] ) {
 			?>
 		<div class="twitter-aggregator-tweet">
-			<div class="twitter-aggregator-tweet-profile-pic"><a href="https://twitter.com/<?php print $tweet->user->screen_name ?>"><img src="<?php print $tweet->user->profile_image_url ?>"></a></div>
+			<div class="twitter-aggregator-tweet-profile-pic"><a href="https://twitter.com/<?php print $tweet->user->screen_name ?>"><img src="<?php print $tweet->user->profile_image_url ?>" alt="Tweet by @<?php print $tweet->user->screen_name ?>"></a></div>
 			<div class="twitter-aggregator-tweet-profile-name"><a href="https://twitter.com/<?php print $tweet->user->screen_name ?>"><?php print $tweet->user->name ?></a></div>
 			<div class="twitter-aggregator-tweet-time"><?php print ago( $tweet->created_at ); ?> ago</div>
 			<div class="twitter-aggregator-tweet-text"><?php print make_clickable( $tweet->text ); ?></div>

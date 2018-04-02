@@ -158,7 +158,7 @@ function twitter_aggregator_widget( $instance_settings ) {
 			?>
 		<div class="twitter-aggregator-tweet">
 			<div class="twitter-aggregator-tweet-profile-pic"><img src="<?php print $tweet->user->profile_image_url ?>" alt="Tweet by @<?php print $tweet->user->screen_name ?>"></div>
-			<h3 class="twitter-aggregator-tweet-profile-name"><a href="https://twitter.com/<?php print $tweet->user->screen_name ?>"><?php print $tweet->user->name ?></a></h3>
+			<h3 class="twitter-aggregator-tweet-profile-name"><a href="https://twitter.com/<?php print $tweet->user->screen_name ?>"><?php print $tweet->user->screen_name ?></a></h3>
 			<div class="twitter-aggregator-tweet-time"><?php print ago( $tweet->created_at ); ?> ago</div>
 			<div class="twitter-aggregator-tweet-text"><?php print make_clickable( $tweet->text ); ?></div>
 		</div>

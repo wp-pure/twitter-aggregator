@@ -12,7 +12,8 @@ $aggregator_settings = array(
     'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
     'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
     'usernames' => "jamespederson,jpederson",
-    'limit' => "10"
+    'limit' => "10",
+    'timeout' => 20
 );
 
 // output the actual widget

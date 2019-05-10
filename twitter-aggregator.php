@@ -13,12 +13,13 @@ $settings = array(
     'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
     'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
     'usernames' => "jamespederson",
-    'limit' => "10"
+    'limit' => "10",
+    'timeout' => 10
 );
 
 
 
-function make_clickable( $string) {
+function make_clickable( $string ) {
 	$url = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';   
 	$string = preg_replace($url, '<a href="$0" target="_blank" title="$0">$0</a>', $string);
 	return $string;
@@ -63,7 +64,7 @@ function twitter_aggregator_get_timeline( $instance_settings ) {
 
 	// check if we have a cached version
 	if ( file_exists( $cache_file ) ) {
-		if ( filemtime( $cache_file ) < ( time() - 600 ) ) {
+		if ( filemtime( $cache_file ) < ( time() - ( $all_settings['timeout'] * 60 ) ) ) {
 			$cached = false;
 		} else {
 			$cached = true;

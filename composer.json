@@ -1,6 +1,6 @@
 {
-    "name": "jamespederson/wp-twitter-aggregator",
-    "description": "A Twitter aggregator to aggregate multiple twitter accounts into a single lising. Includes caching - originally intended to work with WordPress - but eventually will work with any PHP application.",
+    "name": "jamespederson/php-twitter-aggregator",
+    "description": "A Twitter aggregator to aggregate multiple twitter accounts into a single lising. Includes caching - originally intended to work with WordPress - but will also work with any PHP application.",
     "type": "library",
     "license": "MIT",
     "authors": [

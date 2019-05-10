@@ -2,7 +2,7 @@
 
 
 // include twitter api php class
-require_once( 'lib/twitter-api/TwitterAPIExchange.php' );
+require_once( 'vendor/j7mbo/twitter-api-php/TwitterAPIExchange.php' );
 
 
 
@@ -12,10 +12,17 @@ $settings = array(
     'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
     'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
     'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
-    'usernames' => "jpederson",
+    'usernames' => "jamespederson",
     'limit' => "10"
 );
 
+
+
+function make_clickable( $string) {
+	$url = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';   
+	$string = preg_replace($url, '<a href="$0" target="_blank" title="$0">$0</a>', $string);
+	return $string;
+}
 
 
 // get twitter timelines and return them
@@ -27,11 +34,19 @@ function twitter_aggregator_get_timeline( $instance_settings ) {
 	// merge instance settings with global settings, overriding global if passed here
 	$all_settings = array_merge( $settings, $instance_settings );
 
-	// get upload directory info
-	$upload_info = wp_upload_dir();
+	if ( function_exists( 'wp_upload_dir' ) ) {
+		// get upload directory info
+		$upload_info = wp_upload_dir();
 
-	// set up some variables to store cache urls
-	$cache_dir = $upload_info['basedir'] . '/cache';
+		// set up some variables to store cache urls
+		$cache_dir = $upload_info['basedir'] . '/cache';
+	} else {
+		$cache_dir = 'cache';
+
+		if ( !file_exists( $cache_dir ) ) {
+			mkdir( $cache_dir );
+		}
+	}
 
 	// cache file url for this set of usernames
 	$cache_file = $cache_dir . '/twitter-' . md5( $all_settings['usernames'] ) . '.txt';

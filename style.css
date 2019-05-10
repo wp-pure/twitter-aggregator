@@ -1,0 +1,23 @@
+
+
+.twitter-aggregator-tweet-profile-pic {
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+.twitter-aggregator-tweet-profile-name {
+	font-size: 20px;
+	line-height: 28px;
+	margin: 0;
+}
+
+.twitter-aggregator-tweet-time {
+	font-size: 15px;
+	line-height: 20px;
+}
+
+.twitter-aggregator-tweet-text {
+	clear: left;
+	margin-bottom: 20px;
+}
+

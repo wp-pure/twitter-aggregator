@@ -32,7 +32,7 @@ $aggregator_settings = array(
     'consumer_secret' => "[CONSUMER SECRET]",
     'oauth_access_token' => "[OAUTH ACCESS TOKEN]",
     'oauth_access_token_secret' => "[OAUTH ACCESS TOKEN SECRET]",
-    'usernames' => "[TWITTER USERNAME]",
+    'usernames' => "[TWITTER USERNAMES]", // comma separated list of multiple twitter handles.
     'limit' => "10"
 );
 

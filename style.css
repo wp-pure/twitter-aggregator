@@ -1,4 +1,20 @@
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.twitter-aggregator-tweet {
+	font-family: Open Sans, sans-serif;
+	margin-bottom: 30px;
+	color: #666;
+}
+
+.twitter-aggregator-tweet a {
+	color: #38914a;
+	text-decoration: none;
+}
+
+.twitter-aggregator-tweet a:hover {
+	text-decoration: underline;
+}
 
 .twitter-aggregator-tweet-profile-pic {
 	float: left;
@@ -12,12 +28,14 @@
 }
 
 .twitter-aggregator-tweet-time {
-	font-size: 15px;
+	font-size: 14px;
 	line-height: 20px;
+	color: #aaa;
 }
 
 .twitter-aggregator-tweet-text {
 	clear: left;
-	margin-bottom: 20px;
+	font-size: 14px;
+	line-height: 20px;
 }
 

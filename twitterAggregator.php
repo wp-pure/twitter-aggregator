@@ -4,311 +4,311 @@
 // the twitter aggregator class
 class twitterAggregator {
 
-	// our options array
-	private $option = array(
+    // our options array
+    private $option = array(
 
-		// twitter API consumer key, secret, and oath token and oauth secret
-		'consumer_key' => "UFBxe5cHwmGbDxHf3H9jDAGar",
-		'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
-		'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
-		'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
+        // twitter API consumer key, secret, and oath token and oauth secret
+        'consumer_key' => "UFBxe5cHwmGbDxHf3H9jDAGar",
+        'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
+        'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
+        'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
 
-		// comma separated list of twitter handles to pull
-		'usernames' => "jamespederson",
+        // comma separated list of twitter handles to pull
+        'usernames' => "jamespederson",
 
-		// set the number of tweets to show
-		'count' => 10,
+        // set the number of tweets to show
+        'count' => 10,
 
-		// set an update interval (minutes)
-		'update_interval' => 10,
+        // set an update interval (minutes)
+        'update_interval' => 10,
 
-		// set the cache directory name/path
-		'cache_dir' => 'cache',
+        // set the cache directory name/path
+        'cache_dir' => 'cache',
 
-		// boolean, exclude replies, default true
-		'exclude_replies' => true,
+        // boolean, exclude replies, default true
+        'exclude_replies' => true,
 
-		// boolean, include retweets, default true
-		'include_rts' => true
+        // boolean, include retweets, default true
+        'include_rts' => true
 
-	);
+    );
 
-	// debug mode will display errors and stop script processing
-	public $debug = false;
+    // debug mode will display errors and stop script processing
+    public $debug = false;
 
-	// this property will hold the error array if one occurs
-	public $error = false;
+    // this property will hold the error array if one occurs
+    public $error = false;
 
-	// data property to contain entire fetched timelines
-	public $data = array();
+    // data property to contain entire fetched timelines
+    public $data = array();
 
-	// data array trimmed down to the requested count
-	public $data_trimmed = array();
+    // data array trimmed down to the requested count
+    public $data_trimmed = array();
 
 
 
-	// the main constructor function, loads settings if included
-	public function __construct( $options ) {
+    // the main constructor function, loads settings if included
+    public function __construct( $options ) {
 
-		// if settings were passed to the constructor
-		if ( !empty( $options ) ) {
+        // if settings were passed to the constructor
+        if ( !empty( $options ) ) {
 
-			// loop through them
-			foreach ( $options as $opt_key=>$opt_val ) {
+            // loop through them
+            foreach ( $options as $opt_key=>$opt_val ) {
 
-				// set the values in object properties
-				$this->option[$opt_key] = $opt_val;
+                // set the values in object properties
+                $this->option[$opt_key] = $opt_val;
 
-			}
+            }
 
-		}
+        }
 
-		// check if we're in WordPress
-		if ( function_exists( 'wp_upload_dir' ) ) {
-			
-			// get upload directory info
-			$upload_info = wp_upload_dir();
+        // check if we're in WordPress
+        if ( function_exists( 'wp_upload_dir' ) ) {
+            
+            // get upload directory info
+            $upload_info = wp_upload_dir();
 
-			// set up some variables to store cache urls
-			$this->option['cache_dir'] = $upload_info['basedir'] . '/cache';
+            // set up some variables to store cache urls
+            $this->option['cache_dir'] = $upload_info['basedir'] . '/cache';
 
-		}
-	}
+        }
+    }
 
 
 
-	// get twitter timelines and return them
-	public function fetch() {
+    // get twitter timelines and return them
+    public function fetch() {
 
-		// if we've already got the data stored in a property (the request has already taken place)
-		if ( !empty( $this->data ) ) {
+        // if we've already got the data stored in a property (the request has already taken place)
+        if ( !empty( $this->data ) ) {
 
-			// return it
-			return $this->data;
+            // return it
+            return $this->data;
 
-		} else {
+        } else {
 
-			// put together the cache file url for this set of usernames
-			$cache_file = $this->option['cache_dir'] . '/twitter-' . md5( $this->option['usernames'] ) . '.txt';
+            // put together the cache file url for this set of usernames
+            $cache_file = $this->option['cache_dir'] . '/twitter-' . md5( $this->option['usernames'] ) . '.txt';
 
-			// if cache folder doesn't exist
-			if ( !file_exists( $this->option['cache_dir'] ) ) {
+            // if cache folder doesn't exist
+            if ( !file_exists( $this->option['cache_dir'] ) ) {
 
-				// make the cache directory
-				if ( !mkdir( $this->option['cache_dir'], '777', 1 ) ) {
+                // make the cache directory
+                if ( !mkdir( $this->option['cache_dir'], '777', 1 ) ) {
 
-					// register an error array if there's trouble making the directory
-					$this->error( 'Failed to create cache directory.' );
+                    // register an error array if there's trouble making the directory
+                    $this->error( 'Failed to create cache directory.' );
 
-				}
+                }
 
-			}
+            }
 
-			// check if we have a cache file
-			if ( file_exists( $cache_file ) ) {
+            // check if we have a cache file
+            if ( file_exists( $cache_file ) ) {
 
-				// refresh the cache if the cache file is older than our update_interval value ago
-				if ( filemtime( $cache_file ) < ( time() - ( $this->option['update_interval'] * 60 ) ) ) {
-					$cached = false;
-				} else {
-					$cached = true;
-				}
-			} else {
-				$cached = false;
-			}
-			
+                // refresh the cache if the cache file is older than our update_interval value ago
+                if ( filemtime( $cache_file ) < ( time() - ( $this->option['update_interval'] * 60 ) ) ) {
+                    $cached = false;
+                } else {
+                    $cached = true;
+                }
+            } else {
+                $cached = false;
+            }
+            
 
-			// if we don't have the timeline cached, grab it again.
-			if ( $cached === false ) {
+            // if we don't have the timeline cached, grab it again.
+            if ( $cached === false ) {
 
-				// split apart usernames
-				$usernames = explode( ",", $this->option['usernames'] );
+                // split apart usernames
+                $usernames = explode( ",", $this->option['usernames'] );
 
-				// empty array to place results into
-				$response_final = array();
+                // empty array to place results into
+                $response_final = array();
 
-				// loop through usernames
-				if ( !empty( $usernames ) ) {
-					foreach ( $usernames as $username ) {
+                // loop through usernames
+                if ( !empty( $usernames ) ) {
+                    foreach ( $usernames as $username ) {
 
-						// pull some statuses
-						$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+                        // pull some statuses
+                        $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
 
-						// parameters to pass to twitter api
-						$query_args = array(
+                        // parameters to pass to twitter api
+                        $query_args = array(
 
-							// the twitter handle we're looking up
-							'screen_name' => trim( $username ),
+                            // the twitter handle we're looking up
+                            'screen_name' => trim( $username ),
 
-							// don't include replies.
-							'exclude_replies' => $this->option['exclude_replies'],
+                            // don't include replies.
+                            'exclude_replies' => $this->option['exclude_replies'],
 
-							// don't include replies.
-							'include_rts' => $this->option['include_rts'],
+                            // don't include replies.
+                            'include_rts' => $this->option['include_rts'],
 
-							// request 5 times the number of records we need, since the api counts tweets before excluding replies and retrweets (if those are set)
-							'count' => ( $this->option['count'] * 5 )
+                            // request 5 times the number of records we need, since the api counts tweets before excluding replies and retrweets (if those are set)
+                            'count' => ( $this->option['count'] * 5 )
 
-						);
+                        );
 
-						// build the query string
-						$query = '?' . http_build_query( $query_args );
+                        // build the query string
+                        $query = '?' . http_build_query( $query_args );
 
-						// use the get method
-						$method = 'GET';
+                        // use the get method
+                        $method = 'GET';
 
-						// open up a twitter API object for us
-						$twitter = new TwitterAPIExchange( $this->option );
+                        // open up a twitter API object for us
+                        $twitter = new TwitterAPIExchange( $this->option );
 
-						// execute response
-						$response = $twitter->setGetfield( $query )->buildOauth( $url, $method )->performRequest();
+                        // execute response
+                        $response = $twitter->setGetfield( $query )->buildOauth( $url, $method )->performRequest();
 
-						// convert the response from json to an array
-						$response_array = json_decode( $response );
+                        // convert the response from json to an array
+                        $response_array = json_decode( $response );
 
-						// loop through response, and set up the array by date
-						if ( isset( $response_array->errors ) ) {
+                        // loop through response, and set up the array by date
+                        if ( isset( $response_array->errors ) ) {
 
-							// output errors returned by the API if applicable.
-							return $this->error( $response_array->errors[0]->message );
+                            // output errors returned by the API if applicable.
+                            return $this->error( $response_array->errors[0]->message );
 
-						} else {
+                        } else {
 
-							// otherwise, loop through the response array, and build our own array keyed by timestamp
-							foreach ( $response_array as $result ) {
-								$date = strtotime( $result->created_at );
-								$response_final[ $date ] = $result;
-							}
-						}
-					}
+                            // otherwise, loop through the response array, and build our own array keyed by timestamp
+                            foreach ( $response_array as $result ) {
+                                $date = strtotime( $result->created_at );
+                                $response_final[ $date ] = $result;
+                            }
+                        }
+                    }
 
-					// sort response array in reverse order by the key (tweet timestamp)
-					krsort( $response_final );
+                    // sort response array in reverse order by the key (tweet timestamp)
+                    krsort( $response_final );
 
-					// write the cache file
-					if ( !file_put_contents( $cache_file, serialize( $response_final ) ) ) {
+                    // write the cache file
+                    if ( !file_put_contents( $cache_file, serialize( $response_final ) ) ) {
 
-						// return a write error
-						return $this->error( "Could not write cache file." );
-					}
+                        // return a write error
+                        return $this->error( "Could not write cache file." );
+                    }
 
-				} else {
+                } else {
 
-					// output 'no username' error if we didn't get any twitter handles to fetch.
-					return $this->error( "No usernames specified." );
-				}
+                    // output 'no username' error if we didn't get any twitter handles to fetch.
+                    return $this->error( "No usernames specified." );
+                }
 
-			} else {
+            } else {
 
-				// grab cache file if we have it
-				$response_final = unserialize( file_get_contents( $cache_file ) );
-			}
+                // grab cache file if we have it
+                $response_final = unserialize( file_get_contents( $cache_file ) );
+            }
 
-			// set the data into an object property
-			$this->data = $response_final;
-			
-			// trim the array down to the count requested in the 'count' option
-			$this->data_trimmed = array_slice( $response_final, 0, $this->option['count'] );
+            // set the data into an object property
+            $this->data = $response_final;
+            
+            // trim the array down to the count requested in the 'count' option
+            $this->data_trimmed = array_slice( $response_final, 0, $this->option['count'] );
 
-			// return the tweets
-			return $this->data_trimmed;
+            // return the tweets
+            return $this->data_trimmed;
 
-		}
-	}
+        }
+    }
 
 
 
-	// get the widget code
-	public function widget() {
+    // get the widget code
+    public function widget() {
 
-		// get the timelines
-		$this->fetch();
+        // get the timelines
+        $this->fetch();
 
-		// output timeline
-		if ( !empty( $this->data_trimmed ) ) {
+        // output timeline
+        if ( !empty( $this->data_trimmed ) ) {
 
-			$html = '<div class="twitter-aggregator">';
+            $html = '<div class="twitter-aggregator">';
 
-			// set up a counter to output a tweet number for each tweet as we display thme.
-			$tweet_count = 1;
+            // set up a counter to output a tweet number for each tweet as we display thme.
+            $tweet_count = 1;
 
-			// loop through the trimmed data
-			foreach ( $this->data_trimmed as $tweet ) {
+            // loop through the trimmed data
+            foreach ( $this->data_trimmed as $tweet ) {
 
-				// generate the code for each tweet
-				$html .= '<div class="twitter-aggregator-tweet tweet-' . $tweet_count  . '">';
-					$html .= '<div class="twitter-aggregator-tweet-profile-pic"><img src="' . str_replace( 'http://', 'https://', $tweet->user->profile_image_url ) . '" alt="Tweet by @' . $tweet->user->screen_name . '"></div>';
-					$html .= '<h3 class="twitter-aggregator-tweet-profile-name"><a href="https://twitter.com/' . $tweet->user->screen_name . '">' . $tweet->user->screen_name . '</a></h3>';
-					$html .= '<div class="twitter-aggregator-tweet-time">' . $this->ago( $tweet->created_at ) . ' ago</div>';
-					$html .= '<div class="twitter-aggregator-tweet-text">' . $this->make_clickable( $tweet->text ) . '</div>';
-				$html .= '</div>';
+                // generate the code for each tweet
+                $html .= '<div class="twitter-aggregator-tweet tweet-' . $tweet_count  . '">';
+                    $html .= '<div class="twitter-aggregator-tweet-profile-pic"><img src="' . str_replace( 'http://', 'https://', $tweet->user->profile_image_url ) . '" alt="Tweet by @' . $tweet->user->screen_name . '"></div>';
+                    $html .= '<h3 class="twitter-aggregator-tweet-profile-name"><a href="https://twitter.com/' . $tweet->user->screen_name . '">' . $tweet->user->screen_name . '</a></h3>';
+                    $html .= '<div class="twitter-aggregator-tweet-time">' . $this->ago( $tweet->created_at ) . ' ago</div>';
+                    $html .= '<div class="twitter-aggregator-tweet-text">' . $this->make_clickable( $tweet->text ) . '</div>';
+                $html .= '</div>';
 
-				// increment counter
-				$tweet_count++;
-			}
+                // increment counter
+                $tweet_count++;
+            }
 
-			$html .= '</div>';
+            $html .= '</div>';
 
-		}
+        }
 
-		return $html;
-	}
+        return $html;
+    }
 
 
 
-	// display the widget
-	public function display() {
-		print $this->widget();
-	}
+    // display the widget
+    public function display() {
+        print $this->widget();
+    }
 
 
-	// helper function to get a string representing the difference between two times in a human readible format
-	public function ago( $tm, $rcs = 0 ) {
-		if ( is_string( $tm ) ) $tm = strtotime( $tm );
-		$cur_tm = time();
-		$dif = $cur_tm - $tm;
-		$pds = array( 'second', 'minute', 'hour', 'day', 'week', 'month', 'year', 'decade' );
-		$lngh = array( 1, 60, 3600, 86400, 604800, 2630880, 31570560, 315705600 );
-		for($v = sizeof($lngh)-1; ($v >= 0)&&(($no = $dif/$lngh[$v])<=1); $v--); if($v < 0) $v = 0; $_tm = $cur_tm-($dif%$lngh[$v]);
-		$no = floor( $no ); if( $no <> 1 ) $pds[$v] .='s';
-		$x=sprintf("%d %s ",$no,$pds[$v]);
-		if ( ( $rcs == 1 ) && ( $v >= 1 ) && ( ( $cur_tm - $_tm ) > 0 ) ) $x .= time_ago($_tm);
-		return $x;
-	}
+    // helper function to get a string representing the difference between two times in a human readible format
+    public function ago( $tm, $rcs = 0 ) {
+        if ( is_string( $tm ) ) $tm = strtotime( $tm );
+        $cur_tm = time();
+        $dif = $cur_tm - $tm;
+        $pds = array( 'second', 'minute', 'hour', 'day', 'week', 'month', 'year', 'decade' );
+        $lngh = array( 1, 60, 3600, 86400, 604800, 2630880, 31570560, 315705600 );
+        for($v = sizeof($lngh)-1; ($v >= 0)&&(($no = $dif/$lngh[$v])<=1); $v--); if($v < 0) $v = 0; $_tm = $cur_tm-($dif%$lngh[$v]);
+        $no = floor( $no ); if( $no <> 1 ) $pds[$v] .='s';
+        $x=sprintf("%d %s ",$no,$pds[$v]);
+        if ( ( $rcs == 1 ) && ( $v >= 1 ) && ( ( $cur_tm - $_tm ) > 0 ) ) $x .= time_ago($_tm);
+        return $x;
+    }
 
 
 
-	// helper function to parse and make urls clickable.
-	public function make_clickable( $string ) {
-		$url = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';   
-		$string = preg_replace($url, '<a href="$0" target="_blank" title="$0">$0</a>', $string);
-		return $string;
-	}
+    // helper function to parse and make urls clickable.
+    public function make_clickable( $string ) {
+        $url = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/';   
+        $string = preg_replace($url, '<a href="$0" target="_blank" title="$0">$0</a>', $string);
+        return $string;
+    }
 
-	
+    
 
-	// error function, will return an error, or 
-	public function error( $message ) {
+    // error function, will return an error, or 
+    public function error( $message ) {
 
-		// set the error array into an object property
-		$this->error = array(
-			'error' => true,
-			'error_message' => $message
-		);
+        // set the error array into an object property
+        $this->error = array(
+            'error' => true,
+            'error_message' => $message
+        );
 
-		// check our error display setting to see if we need to display them
-		if ( $this->debug ) {
+        // check our error display setting to see if we need to display them
+        if ( $this->debug ) {
 
-			// display error array dump and end processing
-			print_r( $this->error );
-			die;
+            // display error array dump and end processing
+            print_r( $this->error );
+            die;
 
-		} else {
+        } else {
 
-			// otherwise return the error array
-			return $this->error;
+            // otherwise return the error array
+            return $this->error;
 
-		}
-	}
+        }
+    }
 }
 

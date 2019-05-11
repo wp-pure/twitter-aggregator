@@ -2,7 +2,7 @@
 
 This script uses the [twitter-api-php](https://github.com/J7mbo/twitter-api-php) library to retrieve twitter feeds, aggregate them and cache them. If included in a WordPress theme or plugin, it'll find the WP functions, and the cache folder will be put into the uploads folder. Enough ado, here's a sample integration.
 
-![Github](https://img.shields.io/github/release/jpederson/php-twitter-aggregator.svg) ![Packagist](https://img.shields.io/packagist/v/jpederson/twitter-aggregator.svg) ![MIT](https://img.shields.io/github/license/jpederson/php-twitter-aggregator.svg)
+![Github](https://img.shields.io/github/release/jpederson/php-twitter-aggregator.svg) ![MIT](https://img.shields.io/github/license/jpederson/php-twitter-aggregator.svg)
 
 *****
 

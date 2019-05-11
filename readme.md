@@ -6,7 +6,7 @@ This script uses the [twitter-api-php](https://github.com/J7mbo/twitter-api-php)
 
 *****
 
-#### Install via Composer
+### Install via Composer
 
 ```sh
 composer require jpederson/twitter-aggregator
@@ -20,7 +20,7 @@ require_once 'vendor/autoload.php';
 
 *****
 
-#### Twitter API Keys
+### Obtain Twitter API Keys
 
 Check out the URL below to create a Twitter app and get your keys to use their API.
 
@@ -28,9 +28,9 @@ https://dev.twitter.com/apps/new
 
 *****
 
-#### Code Examples
+### Code Examples
 
-**Instantiate**
+#### Instantiate
 
 ```php
 // generate an aggregator object
@@ -63,7 +63,7 @@ $ta = new twitterAggregator( array(
 ) );
 ```
 
-**Methods:**
+#### Methods:
 
 There are multiple ways to use the aggregator once it's instantiated. You can display it, with or without styles, or retrieve the widget code.
 

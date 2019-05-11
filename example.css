@@ -8,17 +8,12 @@
 .twitter-aggregator {
     font-family: Open Sans, sans-serif;
     font-weight: 300;
-    max-width: 500px;
     margin: 0 auto;
     border: 1px solid #aaa;
     padding: 20px;
-}
-
-@media screen and ( min-height: 700px ) {
-    .twitter-aggregator {
-        max-height: 700px;
-        overflow: scroll;
-    }
+    max-height: 400px;
+    max-width: 500px;
+    overflow: scroll;
 }
 
 .twitter-aggregator-tweet {
@@ -41,18 +36,11 @@
 }
 
 .twitter-aggregator-tweet-profile-name {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 28px;
     margin: 0;
     font-weight: 700;
 }
-
-@media screen and ( min-width: 400px ) {
-    .twitter-aggregator-tweet-profile-name {
-        font-size: 20px;
-    }
-}
-
 
 .twitter-aggregator-tweet-time {
     font-size: 14px;

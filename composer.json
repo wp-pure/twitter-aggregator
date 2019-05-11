@@ -1,5 +1,5 @@
 {
-    "name": "jamespederson/php-twitter-aggregator",
+    "name": "jpederson/php-twitter-aggregator",
     "description": "A Twitter aggregator to aggregate multiple twitter accounts into a single lising. Includes caching - originally intended to work with WordPress - but will also work with any PHP application.",
     "type": "library",
     "license": "MIT",

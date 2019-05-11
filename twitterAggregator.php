@@ -249,8 +249,23 @@ class twitterAggregator {
 
     // display the widget
     public function display() {
+        
+        // fetch the and display widget styles
+        print '<style>' . file_get_contents( 'example.css' ) . '</style>';
+
+        // display the widget
         print $this->widget();
     }
+
+
+
+    // display the widget
+    public function display_unstyled() {
+        
+        // display the widget
+        print $this->widget();
+    }
+
 
 
     // helper function to get a string representing the difference between two times in a human readible format

@@ -36,5 +36,5 @@ $ta = new twitterAggregator( array(
 
 ) );
 
-// display the 
+// display the widget
 $ta->display();

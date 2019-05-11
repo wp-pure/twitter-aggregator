@@ -6,63 +6,63 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,700');
 
 .twitter-aggregator {
-	font-family: Open Sans, sans-serif;
-	font-weight: 300;
-	max-width: 500px;
-	margin: 0 auto;
-	border: 1px solid #aaa;
-	padding: 20px;
+    font-family: Open Sans, sans-serif;
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #aaa;
+    padding: 20px;
 }
 
 @media screen and ( min-height: 700px ) {
-	.twitter-aggregator {
-		max-height: 700px;
-		overflow: scroll;
-	}
+    .twitter-aggregator {
+        max-height: 700px;
+        overflow: scroll;
+    }
 }
 
 .twitter-aggregator-tweet {
-	margin-bottom: 30px;
-	color: #666;
+    margin-bottom: 30px;
+    color: #666;
 }
 
 .twitter-aggregator-tweet a {
-	color: #38914a;
-	text-decoration: none;
+    color: #38914a;
+    text-decoration: none;
 }
 
 .twitter-aggregator-tweet a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .twitter-aggregator-tweet-profile-pic {
-	float: left;
-	margin: 0 10px 10px 0;
+    float: left;
+    margin: 0 10px 10px 0;
 }
 
 .twitter-aggregator-tweet-profile-name {
-	font-size: 16px;
-	line-height: 28px;
-	margin: 0;
-	font-weight: 700;
+    font-size: 16px;
+    line-height: 28px;
+    margin: 0;
+    font-weight: 700;
 }
 
 @media screen and ( min-width: 400px ) {
-	.twitter-aggregator-tweet-profile-name {
-		font-size: 20px;
-	}
+    .twitter-aggregator-tweet-profile-name {
+        font-size: 20px;
+    }
 }
 
 
 .twitter-aggregator-tweet-time {
-	font-size: 14px;
-	line-height: 20px;
-	color: #aaa;
+    font-size: 14px;
+    line-height: 20px;
+    color: #aaa;
 }
 
 .twitter-aggregator-tweet-text {
-	clear: left;
-	font-size: 14px;
-	line-height: 20px;
+    clear: left;
+    font-size: 14px;
+    line-height: 20px;
 }
 

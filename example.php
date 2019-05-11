@@ -10,7 +10,7 @@ require_once( 'twitterAggregator.php' );
 // generate an aggregator object
 $ta = new twitterAggregator( array(
 
-	// twitter API consumer key, secret, and oath token and oauth secret
+    // twitter API consumer key, secret, and oath token and oauth secret
     'consumer_key' => "UFBxe5cHwmGbDxHf3H9jDAGar",
     'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
     'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
@@ -22,7 +22,7 @@ $ta = new twitterAggregator( array(
     // set the number of tweets to show
     'count' => 10,
 
-	// set an update interval (minutes)
+    // set an update interval (minutes)
     'update_interval' => 10,
 
     // set the cache directory name/path

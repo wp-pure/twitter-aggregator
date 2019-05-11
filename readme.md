@@ -81,7 +81,7 @@ $code = $ta->widget();
 $data = $ta->fetch();
 ```
 
-If you'd like to directly access the api response (not limited by the `count` option), use the `$ta->data` property after the widget is instantiated.
+If you'd like to directly access the api response (not limited by the `count` option), use the `$ta->data` property after the aggregator object is instantiated.
 
 *****
 

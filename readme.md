@@ -12,7 +12,7 @@ git clone git@github.com:jpederson/php-twitter-aggregator.git
 #### Install via Composer
 
 ```sh
-composer install jamespederson/php-twitter-aggregator
+composer require jamespederson/php-twitter-aggregator
 ```
 
 #### In `functions.php`:

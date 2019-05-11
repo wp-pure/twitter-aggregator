@@ -8,32 +8,32 @@ class twitterAggregator {
 	private $option = array(
 
 		// twitter API consumer key, secret, and oath token and oauth secret
-	    'consumer_key' => "UFBxe5cHwmGbDxHf3H9jDAGar",
-	    'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
-	    'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
-	    'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
+		'consumer_key' => "UFBxe5cHwmGbDxHf3H9jDAGar",
+		'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
+		'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
+		'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
 
-	    // comma separated list of twitter handles to pull
-	    'usernames' => "jamespederson",
+		// comma separated list of twitter handles to pull
+		'usernames' => "jamespederson",
 
-	    // set the number of tweets to show
-	    'count' => 10,
+		// set the number of tweets to show
+		'count' => 10,
 
 		// set an update interval (minutes)
-	    'update_interval' => 10,
+		'update_interval' => 10,
 
-	    // set the cache directory name/path
-	    'cache_dir' => 'cache',
+		// set the cache directory name/path
+		'cache_dir' => 'cache',
 
-	    // boolean, exclude replies, default true
-	    'exclude_replies' => true,
+		// boolean, exclude replies, default true
+		'exclude_replies' => true,
 
-	    // boolean, include retweets, default true
-	    'include_rts' => true
+		// boolean, include retweets, default true
+		'include_rts' => true
 
 	);
 
-    // debug mode will display errors and stop script processing
+	// debug mode will display errors and stop script processing
 	public $debug = false;
 
 	// this property will hold the error array if one occurs
@@ -47,23 +47,23 @@ class twitterAggregator {
 
 
 
-    // the main constructor function, loads settings if included
-    public function __construct( $options ) {
+	// the main constructor function, loads settings if included
+	public function __construct( $options ) {
 
-    	// if settings were passed to the constructor
-    	if ( !empty( $options ) ) {
+		// if settings were passed to the constructor
+		if ( !empty( $options ) ) {
 
-    		// loop through them
-    		foreach ( $options as $opt_key=>$opt_val ) {
+			// loop through them
+			foreach ( $options as $opt_key=>$opt_val ) {
 
-    			// set the values in object properties
-    			$this->option[$opt_key] = $opt_val;
+				// set the values in object properties
+				$this->option[$opt_key] = $opt_val;
 
-    		}
+			}
 
-    	}
+		}
 
-    	// check if we're in WordPress
+		// check if we're in WordPress
 		if ( function_exists( 'wp_upload_dir' ) ) {
 			
 			// get upload directory info
@@ -73,7 +73,7 @@ class twitterAggregator {
 			$this->option['cache_dir'] = $upload_info['basedir'] . '/cache';
 
 		}
-    }
+	}
 
 
 

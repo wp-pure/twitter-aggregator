@@ -11,5 +11,10 @@
     ],
     "require": {
         "j7mbo/twitter-api-php":"*"
+    },
+    "autoload": {
+        "classmap": [
+            "twitter-aggregator.php"
+        ]
     }
 }

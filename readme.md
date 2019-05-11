@@ -22,6 +22,16 @@ composer install jamespederson/php-twitter-aggregator
 require_once( 'twitter-aggregator/widget.php' );
 ```
 
+*****
+
+#### Get Your Twitter API Keys
+
+Check out the URL below to create a Twitter app and get your keys to use their API.
+
+https://dev.twitter.com/apps/new
+
+*****
+
 #### In your theme template file:
 
 ```php

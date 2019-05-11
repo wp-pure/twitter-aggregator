@@ -41,8 +41,10 @@ $aggregator_settings = array(
     'consumer_secret' => "[CONSUMER SECRET]",
     'oauth_access_token' => "[OAUTH ACCESS TOKEN]",
     'oauth_access_token_secret' => "[OAUTH ACCESS TOKEN SECRET]",
-    'usernames' => "[TWITTER USERNAMES]", // comma separated list of multiple twitter handles.
-    'limit' => "10"
+    'usernames' => "[TWITTER USERNAMES]", // comma separated list of twitter handles to fetch
+    'limit' => 20, // the number of tweets you'd like to display
+    'update_interval' => 20, // the minimum number of minutes to wait before refreshing the caches of each username.
+    'cache_dir' => 'cache' // the cache directory name/path
 );
 
 // output the actual widget

@@ -3,10 +3,6 @@
 require_once( 'vendor/autoload.php' );
 require_once( 'twitterAggregator.php' );
 
-?>
-<link href="example.css" rel="stylesheet" />
-<?php
-
 // generate an aggregator object
 $ta = new twitterAggregator( array(
 

@@ -15,13 +15,6 @@ git clone git@github.com:jpederson/php-twitter-aggregator.git
 composer require jamespederson/php-twitter-aggregator
 ```
 
-#### In `functions.php`:
-
-```php
-// this path can be updated to store the aggregator in any directory of your theme.
-require_once( 'twitter-aggregator/widget.php' );
-```
-
 *****
 
 #### Get Your Twitter API Keys
@@ -32,23 +25,43 @@ https://dev.twitter.com/apps/new
 
 *****
 
-#### In your theme template file:
+#### How to Use the Aggregator
 
 ```php
-// add your own key and oauth settings into this array
-$aggregator_settings = array(
+// include the aggregator class
+require_once( 'twitterAggregator.php' );
+
+// generate an aggregator object
+$ta = new twitterAggregator( array(
+
+	// twitter API consumer key, secret, and oath token and oauth secret
     'consumer_key' => "[CONSUMER KEY]",
     'consumer_secret' => "[CONSUMER SECRET]",
     'oauth_access_token' => "[OAUTH ACCESS TOKEN]",
     'oauth_access_token_secret' => "[OAUTH ACCESS TOKEN SECRET]",
-    'usernames' => "[TWITTER USERNAMES]", // comma separated list of twitter handles to fetch
-    'limit' => 20, // the number of tweets you'd like to display
-    'update_interval' => 20, // the minimum number of minutes to wait before refreshing cache(s)
-    'cache_dir' => 'cache' // the cache directory name/path
-);
 
-// output the actual widget
-twitter_aggregator_widget( $aggregator_settings );
+    // comma separated list of twitter handles to pull
+    'usernames' => "[TWITTER USERNAMES]",
+
+    // set the number of tweets to show
+    'count' => 10,
+
+	// set an update interval (minutes)
+    'update_interval' => 10,
+
+    // set the cache directory name/path
+    'cache_dir' => 'cache',
+
+    // boolean, exclude replies, default true
+    'exclude_replies' => true,
+
+    // boolean, include retweets, default true
+    'include_rts' => true
+
+) );
+
+// display the widget
+$ta->display();
 ```
 
 Developed by [James Pederson](http://jpederson.com)

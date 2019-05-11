@@ -1,22 +1,40 @@
 <?php
 
-require( 'twitter-aggregator.php' );
+require_once( 'vendor/autoload.php' );
+require_once( 'twitterAggregator.php' );
 
 ?>
 <link href="example.css" rel="stylesheet" />
 <?php
-// add your own key and oauth settings into this array
-$aggregator_settings = array(
+
+// generate an aggregator object
+$ta = new twitterAggregator( array(
+
+	// twitter API consumer key, secret, and oath token and oauth secret
     'consumer_key' => "UFBxe5cHwmGbDxHf3H9jDAGar",
     'consumer_secret' => "HSozmjgxMvNa74D8Sz5RL6Nav56uK0LKLvIvUu6FAgjNH7uClt",
     'oauth_access_token' => "29196496-q1Wllv60i94w1Wlpt6Ztzimfu5IvQOxOcxt8uwEN1",
     'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
-    'usernames' => "jamespederson", // comma separated list of twitter handles to fetch
-    'limit' => 20, // the number of tweets you'd like to display
-    'update_interval' => 20, // the timeout
-    'cache_dir' => 'cache'
-);
 
-// output the actual widget
-twitter_aggregator_widget( $aggregator_settings );
+    // comma separated list of twitter handles to pull
+    'usernames' => "jamespederson",
 
+    // set the number of tweets to show
+    'count' => 10,
+
+	// set an update interval (minutes)
+    'update_interval' => 10,
+
+    // set the cache directory name/path
+    'cache_dir' => 'cache',
+
+    // boolean, exclude replies, default true
+    'exclude_replies' => true,
+
+    // boolean, include retweets, default true
+    'include_rts' => true
+
+) );
+
+// display the 
+$ta->display();

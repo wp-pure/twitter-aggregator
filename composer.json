@@ -14,7 +14,7 @@
     },
     "autoload": {
         "classmap": [
-            "twitter-aggregator.php"
+            "twitterAggregator.php"
         ]
     }
 }

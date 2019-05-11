@@ -2,22 +2,23 @@
 
 This script uses the [twitter-api-php](https://github.com/J7mbo/twitter-api-php) library to retrieve twitter feeds, aggregate them and cache them. If included in a WordPress theme or plugin, it'll find the WP functions, and the cache folder will be put into the uploads folder. Enough ado, here's a sample integration.
 
-#### Clone it:
-
-```sh
-// clone the repo
-git clone git@github.com:jpederson/php-twitter-aggregator.git
-```
+*****
 
 #### Install via Composer
 
 ```sh
-composer require jamespederson/php-twitter-aggregator
+composer require jpederson/twitter-aggregator
+```
+
+Include composer's autoloader:
+
+```php
+require_once 'vendor/autoload.php';
 ```
 
 *****
 
-#### Get Your Twitter API Keys
+#### Twitter API Keys
 
 Check out the URL below to create a Twitter app and get your keys to use their API.
 
@@ -25,12 +26,11 @@ https://dev.twitter.com/apps/new
 
 *****
 
-#### How to Use the Aggregator
+#### Example
+
+Once the loader has been loaded
 
 ```php
-// include the aggregator class
-require_once( 'twitterAggregator.php' );
-
 // generate an aggregator object
 $ta = new twitterAggregator( array(
 

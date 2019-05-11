@@ -43,7 +43,7 @@ $aggregator_settings = array(
     'oauth_access_token_secret' => "[OAUTH ACCESS TOKEN SECRET]",
     'usernames' => "[TWITTER USERNAMES]", // comma separated list of twitter handles to fetch
     'limit' => 20, // the number of tweets you'd like to display
-    'update_interval' => 20, // the minimum number of minutes to wait before refreshing the caches of each username.
+    'update_interval' => 20, // the minimum number of minutes to wait before refreshing cache(s)
     'cache_dir' => 'cache' // the cache directory name/path
 );
 

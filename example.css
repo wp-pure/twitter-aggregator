@@ -14,9 +14,9 @@
 	padding: 20px;
 }
 
-@media screen and ( min-height: 600px ) {
+@media screen and ( min-height: 700px ) {
 	.twitter-aggregator {
-		max-height: 600px;
+		max-height: 700px;
 		overflow: scroll;
 	}
 }

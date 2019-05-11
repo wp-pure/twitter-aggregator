@@ -2,7 +2,7 @@
 
 This script uses the [twitter-api-php](https://github.com/J7mbo/twitter-api-php) library to retrieve twitter feeds, aggregate them and cache them. If included in a WordPress theme or plugin, it'll find the WP functions, and the cache folder will be put into the uploads folder. Enough ado, here's a sample integration.
 
-![Github](https://img.shields.io/github/release/jpederson/php-twitter-aggregator.svg) ![Packagist](https://img.shields.io/packagist/v/jpederson/twitter-aggregator.svg)
+![Github](https://img.shields.io/github/release/jpederson/php-twitter-aggregator.svg) ![Packagist](https://img.shields.io/packagist/v/jpederson/twitter-aggregator.svg) ![MIT](https://img.shields.io/github/license/jpederson/php-twitter-aggregator.svg)
 
 *****
 
@@ -28,9 +28,9 @@ https://dev.twitter.com/apps/new
 
 *****
 
-#### Example
+#### Code Examples
 
-Once the loader has been loaded
+**Instantiate**
 
 ```php
 // generate an aggregator object
@@ -61,9 +61,28 @@ $ta = new twitterAggregator( array(
     'include_rts' => true
 
 ) );
-
-// display the widget
-$ta->display();
 ```
 
-Developed by [James Pederson](http://jpederson.com)
+**Methods:**
+
+There are multiple ways to use the aggregator once it's instantiated. You can display it, with or without styles, or retrieve the widget code.
+
+```php
+// display the widget
+$ta->display();
+
+// display the widget without any styles
+$ta->display_unstyled();
+
+// fetch the widget code
+$code = $ta->widget();
+
+// fetch data
+$data = $ta->fetch();
+```
+
+If you'd like to directly access the api response (not limited by the `count` option), use the `$ta->data` property after the widget is instantiated.
+
+*****
+
+Developed by [James Pederson](https://jpederson.com).

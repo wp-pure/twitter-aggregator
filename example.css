@@ -13,7 +13,7 @@
     padding: 20px;
     max-height: 500px;
     max-width: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .twitter-aggregator-tweet {

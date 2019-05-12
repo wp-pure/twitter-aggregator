@@ -251,7 +251,7 @@ class twitterAggregator {
     public function display() {
         
         // fetch the and display widget styles
-        print '<style>' . file_get_contents( __DIR__ . '/example.css' ) . '</style>';
+        print '<style>' . file_get_contents( __DIR__ . '/widget.css' ) . '</style>';
 
         // display the widget
         print $this->widget();

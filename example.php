@@ -13,10 +13,10 @@ $ta = new twitterAggregator( array(
     'oauth_access_token_secret' => "SziLDM5qOVAqGrPMvqTKEEWQ7Z4qgmA66aLJh1uOeOfVT",
 
     // comma separated list of twitter handles to pull
-    'usernames' => "jamespederson",
+    'usernames' => "reuters,ap,propublica",
 
     // set the number of tweets to show
-    'count' => 10,
+    'count' => 20,
 
     // set an update interval (minutes)
     'update_interval' => 10,

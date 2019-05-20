@@ -9,6 +9,7 @@
 if ( function_exists( 'add_shortcode' ) ) {
 
     // twitter aggregator options for the wordpress settings page and the shortcode
+    global $ta_options;
     $ta_options = array( 
         'ta_consumer_key', 
         'ta_consumer_secret', 

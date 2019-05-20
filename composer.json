@@ -13,8 +13,7 @@
         "j7mbo/twitter-api-php":"*"
     },
     "autoload": {
-        "classmap": [
-            "twitterAggregator.php"
-        ]
+        "classmap": ["twitterAggregator.php"],
+        "files": ["wordpress.php"]
     }
 }

@@ -422,7 +422,7 @@ if ( function_exists( 'add_shortcode' ) ) {
         // loop through the options and output fields.
         foreach ( $ta_options as $opt ) {
             ?>
-            <p><label for="<?php print $opt ?>">Label</label><br>
+            <p><label for="<?php print $opt ?>"><?php print ucwords( str_replace( "ta_", "", str_replace( "_", " ", $opt ) ) ); ?></label><br>
                 <input type="text" id="<?php print $opt; ?>" name="<?php print $opt; ?>" value="<?php echo get_option( $opt ); ?>" /></p>
             <?php
         }

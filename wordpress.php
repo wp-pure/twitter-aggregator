@@ -8,7 +8,11 @@
 // check if we're inside wordpress
 if ( function_exists( 'add_shortcode' ) ) {
 
-    // twitter aggregator options for the wordpress settings page and the shortcode
+
+    /************************************
+      options keys for shortcode and
+      settings page
+     ***********************************/
     global $ta_options;
     $ta_options = array( 
         'ta_consumer_key', 
@@ -17,6 +21,7 @@ if ( function_exists( 'add_shortcode' ) ) {
         'ta_oauth_access_token_secret', 
         'ta_usenames'
     );
+
 
 
     /************************************
@@ -37,7 +42,6 @@ if ( function_exists( 'add_shortcode' ) ) {
             'exclude_replies' => true,
             'include_rts' => true
         ), $atts );
-
 
         // generate an aggregator object
         $ta = new twitterAggregator( $a );
@@ -69,6 +73,7 @@ if ( function_exists( 'add_shortcode' ) ) {
             add_option( $opt, '');
             register_setting( 'ta_options_group', $opt );
         }
+        
     }
     add_action( 'admin_init', 'ta_register_settings' );
 

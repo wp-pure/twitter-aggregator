@@ -10,21 +10,6 @@ if ( function_exists( 'add_shortcode' ) ) {
 
 
     /************************************
-      options keys for shortcode and
-      settings page
-     ***********************************/
-    global $ta_options;
-    $ta_options = array( 
-        'ta_consumer_key', 
-        'ta_consumer_secret', 
-        'ta_oauth_access_token', 
-        'ta_oauth_access_token_secret', 
-        'ta_usenames'
-    );
-
-
-
-    /************************************
       shortcode [twitter-aggregator]
      ***********************************/
     function twitter_aggregator_shortcode( $atts ) {
@@ -64,6 +49,16 @@ if ( function_exists( 'add_shortcode' ) ) {
       settings interface
      ***********************************/
 
+    // options in the array.
+    global $ta_options;
+    $ta_options = array( 
+        'ta_consumer_key', 
+        'ta_consumer_secret', 
+        'ta_oauth_access_token', 
+        'ta_oauth_access_token_secret', 
+        'ta_usenames'
+    );
+
     // register the settings for the first time.
     function ta_register_settings() {
         global $ta_options;
@@ -80,9 +75,19 @@ if ( function_exists( 'add_shortcode' ) ) {
 
     // register the options page in the admin menu
     function ta_register_options_page() {
-        add_options_page('Twitter Aggregator Settings', 'Twitter Aggregator', 'manage_options', 'ta', 'ta_options_page');
+
+        // if we're using the pure framework
+        if ( defined( 'PURE' ) ) {
+
+            // add as a submenu item
+            add_submenu_page( 'pure', 'Twitter Aggregator Settings', 'Twitter Aggregator', 'manage_options', 'theme_twitter_aggregator', 'ta_options_page' );
+        } else {
+
+            // otherwise, add as an item under 'Settings'
+            add_options_page( 'Twitter Aggregator Settings', 'Twitter Aggregator', 'manage_options', 'ta', 'ta_options_page' );
+        }
     }
-    add_action('admin_menu', 'ta_register_options_page');
+    add_action( 'admin_menu', 'ta_register_options_page', 10 );
 
 
     // the actual page output function

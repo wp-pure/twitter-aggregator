@@ -59,6 +59,7 @@ if ( function_exists( 'add_shortcode' ) ) {
         'ta_usenames'
     );
 
+
     // register the settings for the first time.
     function ta_register_settings() {
         global $ta_options;
@@ -71,6 +72,7 @@ if ( function_exists( 'add_shortcode' ) ) {
         
     }
     add_action( 'admin_init', 'ta_register_settings' );
+
 
 
     // register the options page in the admin menu
@@ -90,6 +92,7 @@ if ( function_exists( 'add_shortcode' ) ) {
     add_action( 'admin_menu', 'ta_register_options_page', 10 );
 
 
+
     // the actual page output function
     function ta_options_page() {
         global $ta_options;
@@ -99,7 +102,7 @@ if ( function_exists( 'add_shortcode' ) ) {
             <h1 class="wp-heading-inline">Twitter Aggregator Settings</h1>
             <p>Enter your Twitter API key and oAuth settings generated at <a href="https://dev.twitter.com/apps/new" target="_blank">https://dev.twitter.com/apps/new</a>, and provide a comma-separated list of twitter handles for the tool to fetch.</p>
             <hr>
-            <style>.ta-field { padding: 5px 10px; min-width: 280px; width: 80%; }</style>
+            <style>.ta-field { padding: 5px 10px; min-width: 280px; width: 100%; }</style>
             <form method="post" action="options.php">
             <?php
 

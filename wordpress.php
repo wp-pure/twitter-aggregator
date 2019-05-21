@@ -102,7 +102,7 @@ if ( function_exists( 'add_shortcode' ) ) {
             <h1 class="wp-heading-inline">Twitter Aggregator Settings</h1>
             <p>Enter your Twitter API key and oAuth settings generated at <a href="https://dev.twitter.com/apps/new" target="_blank">https://dev.twitter.com/apps/new</a>, and provide a comma-separated list of twitter handles for the tool to fetch.</p>
             <hr>
-            <style>.ta-field { padding: 5px 10px; min-width: 280px; width: 100%; }</style>
+            <style>.ta-field { padding: 10px; min-width: 280px; width: 100%; }</style>
             <form method="post" action="options.php">
             <?php
 

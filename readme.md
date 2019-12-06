@@ -9,7 +9,7 @@ This script uses the [twitter-api-php](https://github.com/J7mbo/twitter-api-php)
 ### Install via Composer
 
 ```sh
-composer require jpederson/twitter-aggregator
+composer require wp-pure/twitter-aggregator
 ```
 
 Include composer's autoloader:
